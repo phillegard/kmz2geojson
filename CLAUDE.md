@@ -17,8 +17,6 @@ kmz2geojson input.kmz output.geojson
 kmz2geojson input.kmz output.geojson -v  # verbose mode
 kmz2geojson input.kmz                    # output to stdout
 
-# Test with sample file
-kmz2geojson "820290 , 24 Yosemite to Foothills - CAM.kmz" output.geojson -v
 ```
 
 ## Architecture

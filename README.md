@@ -109,15 +109,13 @@ This tool automatically:
 
 ## Example
 
-Using the provided sample file:
-
 ```bash
-kmz2geojson "820290 , 24 Yosemite to Foothills - CAM.kmz" output.geojson -v
+kmz2geojson "input.kmz" output.geojson -v
 ```
 
 Output:
 ```
-Reading: 820290 , 24 Yosemite to Foothills - CAM.kmz
+Reading: input.kmz
 Converted 1 feature(s)
 Written to: output.geojson
 ```

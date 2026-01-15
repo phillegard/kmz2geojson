@@ -42,6 +42,8 @@ Thumbs.db
 htmlcov/
 
 # Output
+tests/
+claude.md
 *.geojson
 *.kmz
 *.kml
