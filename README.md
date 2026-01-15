@@ -10,6 +10,7 @@ Convert KMZ/KML files to GeoJSON with automatic attribute parsing from HTML tabl
 - Supports multiple geometry types (Point, LineString, Polygon, MultiGeometry)
 - Type coercion: automatically converts numeric strings to int/float
 - CLI tool with flexible output options
+- GUI application with file dialogs and progress indicator
 - Validates GeoJSON output
 
 ## Installation
@@ -76,6 +77,28 @@ for feature in geojson_data['features']:
     print(feature['properties']['name'])
     print(feature['geometry']['type'])
 ```
+
+## GUI Application
+
+Run the graphical interface:
+
+```bash
+python -m kmz2geojson.gui
+```
+
+## Building Standalone Executable
+
+Build a standalone executable that doesn't require Python to be installed:
+
+```bash
+# Install with build dependencies
+pip install -e ".[build]"
+
+# Build the executable
+python scripts/build_exe.py
+```
+
+The executable will be created at `dist/kmz2geojson` (or `dist/kmz2geojson.exe` on Windows).
 
 ## How It Works
 
