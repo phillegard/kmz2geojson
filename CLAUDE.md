@@ -42,6 +42,8 @@ FeatureCollection Output
 
 ### Module Responsibilities
 
+All source code is in `src/kmz2geojson/`:
+
 - **converter.py**: Main orchestrator, file I/O, format detection
 - **kmz_extractor.py**: ZIP extraction (KMZ → KML)
 - **kml_parser.py**: XML parsing with namespace handling, extracts Placemarks
@@ -52,7 +54,7 @@ FeatureCollection Output
 
 ### Key Data Structures
 
-**Placemark** (kml_parser.py):
+**Placemark** (src/kmz2geojson/kml_parser.py):
 ```python
 @dataclass
 class Placemark:
@@ -64,24 +66,24 @@ class Placemark:
 
 ### Critical Implementation Details
 
-**HTML Table Parsing** (html_parser.py):
+**HTML Table Parsing** (src/kmz2geojson/html_parser.py):
 - Uses BeautifulSoup to handle potentially malformed HTML in CDATA sections
 - Extracts `<tr><td>key</td><td>value</td></tr>` patterns
 - Type coercion: "123" → int, "123.45" → float, "<Null>" → None, else string
 - Graceful degradation: returns empty dict if no table found
 
-**KML Namespace Handling** (kml_parser.py, geometry.py):
+**KML Namespace Handling** (src/kmz2geojson/kml_parser.py, geometry.py):
 - KML uses namespaces: `http://www.opengis.net/kml/2.2`
 - Both namespaced and non-namespaced parsing attempted for compatibility
 - Use lxml's XPath with namespace dict for queries
 
-**Coordinate Conversion** (geometry.py):
+**Coordinate Conversion** (src/kmz2geojson/geometry.py):
 - KML format: `"lon,lat,alt lon,lat,alt"` (space-separated)
 - GeoJSON format: `[[lon, lat, alt], [lon, lat, alt]]` (3D coordinates, altitude included)
 - Altitude defaults to 0.0 if not present in KML
 - All coordinates are 3D for consistency
 
-**MultiGeometry Conversion** (geometry.py):
+**MultiGeometry Conversion** (src/kmz2geojson/geometry.py):
 - KML's `<MultiGeometry>` intelligently converts based on child types
 - If all children are same type → converts to Multi* format:
   - All LineStrings → `MultiLineString`
@@ -92,7 +94,7 @@ class Placemark:
 
 ### Validation
 
-The `geojson_builder.py` validator checks:
+The `src/kmz2geojson/geojson_builder.py` validator checks:
 - FeatureCollection structure (type, features array)
 - Feature structure (type, properties, geometry)
 - Geometry structure (type, coordinates/geometries)
@@ -121,7 +123,7 @@ kmz2geojson input.kmz | jq '.features[0].properties | keys'
 
 ## Common Extension Points
 
-- **New geometry types**: Add handler in `geometry.py` `convert()` method
-- **Different description formats**: Extend `html_parser.py` to handle non-table formats
-- **Additional validation**: Extend `_validate_geometry()` in `geojson_builder.py`
-- **Error handling**: Use custom exceptions from `exceptions.py`
+- **New geometry types**: Add handler in `src/kmz2geojson/geometry.py` `convert()` method
+- **Different description formats**: Extend `src/kmz2geojson/html_parser.py` to handle non-table formats
+- **Additional validation**: Extend `_validate_geometry()` in `src/kmz2geojson/geojson_builder.py`
+- **Error handling**: Use custom exceptions from `src/kmz2geojson/exceptions.py`

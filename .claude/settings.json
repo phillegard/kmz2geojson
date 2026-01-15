@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip:*)",
+      "Bash(pip install:*)",
+      "Bash(kmz2geojson:*)",
+      "Bash(python3:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd dynamic attribute extraction from multiple KML formats\n\nSupport both HTML table formats \\(<th><td> and <td><td>\\) and KML\nExtendedData/SimpleData elements for extracting feature attributes.\nThis ensures attributes are captured regardless of KML source format.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(tree:*)"
+    ]
+  }
+}
