@@ -62,15 +62,18 @@ class GeoJSONBuilder:
             GeoJSON Feature dict or None if geometry conversion fails
         """
         # Parse attributes from HTML description
-        attributes = self.html_parser.parse_attributes(placemark.description)
+        html_attributes = self.html_parser.parse_attributes(placemark.description)
+
+        # Parse attributes from ExtendedData
+        extended_attributes = self.html_parser.parse_extended_data(placemark.extended_data)
 
         # Convert geometry
         geometry = self.geom_converter.convert(placemark.geometry_element)
 
-        # Build properties
-        # Start with name, then add all attributes from HTML table
+        # Build properties: name, then HTML attrs, then ExtendedData (overwrites duplicates)
         properties = {'name': placemark.name}
-        properties.update(attributes)
+        properties.update(html_attributes)
+        properties.update(extended_attributes)
 
         # Build feature
         feature = {

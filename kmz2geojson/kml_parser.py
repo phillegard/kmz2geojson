@@ -14,6 +14,7 @@ class Placemark:
     description: Optional[str]
     geometry_element: Optional[etree._Element]
     style_url: Optional[str]
+    extended_data: Optional[etree._Element] = None
 
 
 class KMLParser:
@@ -89,11 +90,17 @@ class KMLParser:
                 style_elem = element.find('styleUrl')
             style_url = style_elem.text if style_elem is not None else None
 
+            # Extract ExtendedData element
+            ext_data_elem = element.find('kml:ExtendedData', namespaces=self.NAMESPACES)
+            if ext_data_elem is None:
+                ext_data_elem = element.find('ExtendedData')
+
             return Placemark(
                 name=name,
                 description=description,
                 geometry_element=geometry_element,
-                style_url=style_url
+                style_url=style_url,
+                extended_data=ext_data_elem
             )
 
         except Exception as e:
