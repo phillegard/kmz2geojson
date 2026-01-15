@@ -37,9 +37,15 @@ dev = [
     "flake8>=6.0.0",
     "mypy>=1.0.0",
 ]
+build = [
+    "pyinstaller>=6.0.0",
+]
 
 [project.scripts]
 kmz2geojson = "kmz2geojson.cli:main"
+
+[project.gui-scripts]
+kmz2geojson-gui = "kmz2geojson.gui:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
