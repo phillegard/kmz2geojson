@@ -125,9 +125,9 @@ class GeoJSONBuilder:
 
             return True
 
-        except ValidationError:
-            raise
         except Exception as e:
+            if isinstance(e, ValidationError):
+                raise
             raise ValidationError(f"Validation error: {e}")
 
     def _validate_geometry(self, geometry: Dict, context: str):
